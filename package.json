@@ -1,0 +1,57 @@
+{
+  "name": "chessfe",
+  "private": false,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix --report-unused-disable-directives --max-warnings 0",
+    "prettify": "prettier --ignore-unknown --write \"src/**/*.{ts,tsx}\" ",
+    "preview": "vite preview",
+    "circularDeps": "npx madge --circular --extensions ts,tsx,js,jsx,svg ./src",
+    "check-packages": "ncu",
+    "prepare": "husky",
+    "reinstall": "rm -rf node_modules && yarn install"
+  },
+  "dependencies": {
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.47",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.11.0",
+    "@types/node": "22.5.5",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "@vitejs/plugin-react-swc": "3.5.0",
+    "eslint": "9.11.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-no-relative-import-paths": "1.5.5",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-react-hooks": "5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "0.4.9",
+    "globals": "15.9.0",
+    "husky": "9.1.6",
+    "lint-staged": "15.2.10",
+    "npm-check-updates": "17.1.2",
+    "pinst": "3.0.0",
+    "prettier": "3.3.3",
+    "prettier-plugin-tailwindcss": "0.6.6",
+    "typescript": "5.5.3",
+    "typescript-eslint": "8.0.1",
+    "vite": "5.4.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix --report-unused-disable-directives --max-warnings 0 --no-ignore",
+      "prettier --ignore-unknown --write"
+    ],
+    "*.{md,html,css}": "prettier --write"
+  },
+  "resolutions": {
+    "strip-ansi": "6.0.1"
+  }
+}
