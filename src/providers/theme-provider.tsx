@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
+import { THEME_VALUES, STORAGE_KEYS } from '@/helpers/constants';
 
-type Theme = 'dark' | 'light' | 'system';
+type Theme = (typeof THEME_VALUES)[keyof typeof THEME_VALUES];
 
 type ThemeProviderProps = {
     children: React.ReactNode;
@@ -14,29 +15,32 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-    theme: 'system',
+    theme: THEME_VALUES.SYSTEM,
     setTheme: () => null,
 };
 
 export const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({ children, defaultTheme = 'system', storageKey = 'ui-theme', ...props }: ThemeProviderProps) {
+export function ThemeProvider({
+    children,
+    defaultTheme = THEME_VALUES.SYSTEM,
+    storageKey = STORAGE_KEYS.UI_THEME_KEY,
+    ...props
+}: ThemeProviderProps): JSX.Element {
     const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(storageKey) as Theme) || defaultTheme);
 
     useEffect(() => {
         const root = window.document.documentElement;
-
-        root.classList.remove('light', 'dark');
-
+        root.classList.remove(THEME_VALUES.DARK, THEME_VALUES.LIGHT);
         if (theme === 'system') {
             const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-
+            localStorage.setItem(storageKey, theme);
             root.classList.add(systemTheme);
             return;
         }
-
+        localStorage.setItem(storageKey, theme);
         root.classList.add(theme);
-    }, [theme]);
+    }, [theme, storageKey]);
 
     const value = {
         theme,
